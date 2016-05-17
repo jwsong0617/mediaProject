@@ -12,8 +12,8 @@ import numpy as np
 GAME = 'pong' # the name of the game being played for log files
 GAMMA = 0.99 # decay rate of past observations
 ACTIONS = 3 # number of valid actions
-OBSERVE = 500. # timesteps to observe before training
-EXPLORE = 5000. # frames over which to anneal epsilon
+OBSERVE = 50000. # timesteps to observe before training
+EXPLORE = 500000. # frames over which to anneal epsilon
 FINAL_EPSILON = 0.1 # final value of epsilon
 INITIAL_EPSILON = 1.0 # starting value of epsilon
 REPLAY_MEMORY = 100000 # number of previous transitions to remember
@@ -89,11 +89,12 @@ def trainNetwork(s, readout, h_fc1, sess):
     D = []
 
     # printing
-    a_file = open("logs/readout.txt", 'w')
-    h_file = open("logs/hidden.txt", 'w')
+#   a_file = open("logs/readout.txt", 'w')
+#   h_file = open("logs/hidden.txt", 'w')
+    l_file = open("logs/logs.txt", 'a')
 
     # get the first state by doing nothing and preprocess the image to 80x80x4
-    x_t, r_0, terminal = game_state.frame_step([1, 0, 0])
+    x_t, r_0, terminal, score1, score2 = game_state.frame_step([1, 0, 0, 0, 0])
     x_t = cv2.cvtColor(cv2.resize(x_t, (80, 80)), cv2.COLOR_BGR2GRAY)
     s_t = np.stack((x_t, x_t, x_t, x_t), axis = 2)
 
@@ -128,7 +129,7 @@ def trainNetwork(s, readout, h_fc1, sess):
 
         for i in range(0, K):
             # run the selected action and observe next state and reward
-            x_t1_col, r_t, terminal = game_state.frame_step(a_t)
+            x_t1_col, r_t, terminal, score1, score2 = game_state.frame_step(a_t)
             x_t1 = cv2.cvtColor(cv2.resize(x_t1_col, (80, 80)), cv2.COLOR_BGR2GRAY)
             x_t1 = np.reshape(x_t1, (80, 80, 1))
             s_t1 = np.append(x_t1, s_t[:,:,1:], axis = 2)
@@ -180,13 +181,19 @@ def trainNetwork(s, readout, h_fc1, sess):
             state = "explore"
         else:
             state = "train"
-        print "TIMESTEP", t, "/ STATE", state, "/ EPSILON", epsilon, "/ ACTION", action_index, "/ REWARD", r_t, "/ Q_MAX %e" % np.max(readout_t)
+        print "TIMESTEP", t, "/ STATE", state, "/ EPSILON", epsilon, "/ ACTION", action_index, "/ REWARD", r_t, "/ Q_MAX %e" % np.max(readout_t), "/ SCORE1", score1, "/ SCORE2", score2
 
+        if terminal == 1:
+            log = [t, score1, score2]
+            l_file.write(",".join([str(x) for x in log] + '\n')
         # write info to files
-        if t % 10000 <= 100:
-            a_file.write(",".join([str(x) for x in readout_t]) + '\n')
-            h_file.write(",".join([str(x) for x in h_fc1.eval(feed_dict={s:[s_t]})[0]]) + '\n')
-            cv2.imwrite("logs/frame" + str(t) + ".png", x_t1_col)
+        # if t % 10000 <= 2000:
+          # a_file.write(",".join([str(x) for x in readout_t]) + '\n')
+          # h_file.write(",".join([str(x) for x in h_fc1.eval(feed_dict={s:[s_t]})[0]]) + '\n')	   
+          # t, ",", action_index, ",", np.max(readout_t), ",", score1, ",", score2, "\n"
+          # log = [t, action_index, np.max(readout_t), score1, score2]
+          # l_file.write(",".join([str(x) for x in log]) + '\n')
+          # cv2.imwrite("logs/frame" + str(t) + ".png", x_t1_col)
 
 def playGame():
     sess = tf.InteractiveSession()

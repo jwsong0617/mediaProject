@@ -49,8 +49,6 @@ class GameState:
     def frame_step(self,input_vect):
         pygame.event.pump()
         reward = 0
-        matchScore1 = 0
-        matchScore2 = 0
 
         if sum(input_vect) != 1:
             raise ValueError('Multiple input actions!')
@@ -133,10 +131,8 @@ class GameState:
 
         terminal = False
         if max(self.bar1_score, self.bar2_score) >= 20:
-            matchScore1 = self.bar1_score
-            matchScore2 = self.bar2_score
             self.bar1_score = 0
-            self.bar2_score = 0            
+            self.bar2_score = 0
             terminal = True
 
-        return image_data, reward, terminal, matchScore1, matchScore2
+        return image_data, reward, terminal
