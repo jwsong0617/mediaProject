@@ -44,7 +44,7 @@ class GameState:
         self.circle_x, self.circle_y = 307.5, 232.5
         self.bar1_move, self.bar2_move = 0. , 0.
         self.bar1_score, self.bar2_score = 0,0
-        self.speed_x, self.speed_y = 21., 21.
+        self.speed_x, self.speed_y = 21., 21. #sjw
 
     def frame_step(self,input_vect):
         pygame.event.pump()

@@ -19,7 +19,7 @@ screen = pygame.display.set_mode((640,480),0,32)
 back = pygame.Surface((640,480))
 background = back.convert()
 background.fill((0,0,0))
-bar = pygame.Surface((10,25))
+bar = pygame.Surface((10,25)) #sjw
 bar1 = bar.convert()
 bar1.fill((0,255,255))
 bar2 = bar.convert()

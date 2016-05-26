@@ -30,7 +30,7 @@ circle = circ_sur.convert()
 circle.set_colorkey((0,0,0))
 font = pygame.font.SysFont("calibri",40)
 
-#Creating 4 obstacle bars.
+#Creating 4 obstacle bars. #hma
 obs = pygame.Surface((60, 10))
 obs1 = obs.convert()
 obs1.fill((0,0,0))
@@ -60,7 +60,7 @@ class GameState:
         self.bar1_move, self.bar2_move = 0. , 0.
         self.bar1_score, self.bar2_score = 0,0
         self.speed_x, self.speed_y = 7., 7.
-        #obstacles Initialization.
+        #obstacles Initialization. #hma
         self.obs1_x, self.obs2_x, self.obs3_x, self.obs4_x = 290. , 290., 290., 290.
         self.obs1_y, self.obs2_y, self.obs3_y, self.obs4_y = 96. , 192., 288., 384.
         self.flag = 1.
@@ -91,7 +91,7 @@ class GameState:
         screen.blit(circle,(self.circle_x,self.circle_y))
         screen.blit(self.score1,(250.,210.))
         screen.blit(self.score2,(380.,210.))
-        #obstacle blit
+        #obstacle blit #hma
         screen.blit(obs1,(self.obs1_x, self.obs1_y))
         screen.blit(obs2,(self.obs2_x, self.obs2_y))
         screen.blit(obs3,(self.obs3_x, self.obs3_y))
@@ -109,7 +109,7 @@ class GameState:
 #            else:
 #                self.bar2_y == self.circle_y + 7.5
 
-        #Human Control.
+        #Human Control. #hma
         #done = False
         #while done==False:
         for event in pygame.event.get(): # User did something
@@ -162,7 +162,7 @@ class GameState:
 #                self.speed_y = +self.speed_y
 #            elif self.circle_y >= self.obs4_y + 10.:
 #                self.speed_y = -self.speed_y
-        #ball initiating
+        #ball initiating #hma
         if self.circle_x == 307.5 and self.circle_y == 232.5:
             self.flag = 0
         elif self.circle_x <= self.obs1_x or self.circle_x >= self.obs1_x + 30.:

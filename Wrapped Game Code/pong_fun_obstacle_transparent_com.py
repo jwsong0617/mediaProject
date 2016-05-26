@@ -30,7 +30,7 @@ circle = circ_sur.convert()
 circle.set_colorkey((0,0,0))
 font = pygame.font.SysFont("calibri",40)
 
-#Creating 4 obstacle bars.
+#Creating 4 obstacle bars. #hma
 obs = pygame.Surface((60, 10))
 obs1 = obs.convert()
 obs1.fill((0,0,0))
@@ -60,7 +60,7 @@ class GameState:
         self.bar1_move, self.bar2_move = 0. , 0.
         self.bar1_score, self.bar2_score = 0,0
         self.speed_x, self.speed_y = 7., 7.
-        #obstacles Initialization.
+        #obstacles Initialization. #hma
         self.obs1_x, self.obs2_x, self.obs3_x, self.obs4_x = 290. , 290., 290., 290.
         self.obs1_y, self.obs2_y, self.obs3_y, self.obs4_y = 96. , 192., 288., 384.
 
@@ -85,18 +85,18 @@ class GameState:
 
         screen.blit(background,(0,0))
         frame = pygame.draw.rect(screen,(255,255,255),Rect((5,5),(630,470)),2)
-        middle_line = pygame.draw.aaline(screen,(255,255,255),(330,5),(330,475))
+#        middle_line = pygame.draw.aaline(screen,(255,255,255),(330,5),(330,475))
         screen.blit(bar1,(self.bar1_x,self.bar1_y))
         screen.blit(bar2,(self.bar2_x,self.bar2_y))
         screen.blit(circle,(self.circle_x,self.circle_y))
         screen.blit(self.score1,(250.,210.))
         screen.blit(self.score2,(380.,210.))
-        #obstacle blit
+        #obstacle blit #hma
         screen.blit(obs1,(self.obs1_x, self.obs1_y))
         screen.blit(obs2,(self.obs2_x, self.obs2_y))
         screen.blit(obs3,(self.obs3_x, self.obs3_y))
         screen.blit(obs4,(self.obs4_x, self.obs4_y))
-
+        middle_line = pygame.draw.aaline(screen,(255,255,255),(330,5),(330,475))
         self.bar1_y += self.bar1_move
 
         #AI of the computer.
@@ -109,7 +109,7 @@ class GameState:
             else:
                 self.bar2_y == self.circle_y + 7.5
 
-        #Human Control.
+        #Human Control. #hma
         #done = False
         #while done==False:
         #    for event in pygame.event.get(): # User did something
@@ -144,7 +144,7 @@ class GameState:
                 self.circle_x = 605.
                 self.speed_x = -self.speed_x
 
-        #colisions on obstacles
+        #colisions on obstacles #hma
         if self.circle_x >= self.obs1_x and self.circle_x <= self.obs1_x + 30.:
             if self.circle_y <= self.obs1_y - 10.:
                 self.speed_y = +self.speed_y

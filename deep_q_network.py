@@ -12,8 +12,8 @@ import numpy as np
 GAME = 'pong' # the name of the game being played for log files
 GAMMA = 0.99 # decay rate of past observations
 ACTIONS = 3 # number of valid actions
-OBSERVE = 500. # timesteps to observe before training
-EXPLORE = 5000. # frames over which to anneal epsilon
+OBSERVE = 800. # timesteps to observe before training #sjw
+EXPLORE = 5000. # frames over which to anneal epsilon #sjw
 FINAL_EPSILON = 0.1 # final value of epsilon
 INITIAL_EPSILON = 1.0 # starting value of epsilon
 REPLAY_MEMORY = 100000 # number of previous transitions to remember
@@ -88,13 +88,15 @@ def trainNetwork(s, readout, h_fc1, sess):
     # store the previous observations in replay memory
     D = []
 
+#sjw
     # printing
 #   a_file = open("logs/readout.txt", 'w')
 #   h_file = open("logs/hidden.txt", 'w')
     l_file = open("logs/logs.txt", 'a')
+#sjw
 
     # get the first state by doing nothing and preprocess the image to 80x80x4
-    x_t, r_0, terminal, score1, score2 = game_state.frame_step([1, 0, 0, 0, 0])
+    x_t, r_0, terminal, score1, score2 = game_state.frame_step([1, 0, 0, 0, 0]) #sjw
     x_t = cv2.cvtColor(cv2.resize(x_t, (80, 80)), cv2.COLOR_BGR2GRAY)
     s_t = np.stack((x_t, x_t, x_t, x_t), axis = 2)
 
@@ -116,7 +118,7 @@ def trainNetwork(s, readout, h_fc1, sess):
         a_t = np.zeros([ACTIONS])
         action_index = 0
 #       if random.random() <= epsilon or t <= OBSERVE:
-        if t <= OBSERVE:
+        if t <= OBSERVE: #sjw
             action_index = random.randrange(ACTIONS)
             a_t[random.randrange(ACTIONS)] = 1
         else:
@@ -129,7 +131,7 @@ def trainNetwork(s, readout, h_fc1, sess):
 
         for i in range(0, K):
             # run the selected action and observe next state and reward
-            x_t1_col, r_t, terminal, score1, score2 = game_state.frame_step(a_t)
+            x_t1_col, r_t, terminal, score1, score2 = game_state.frame_step(a_t) #sjw
             x_t1 = cv2.cvtColor(cv2.resize(x_t1_col, (80, 80)), cv2.COLOR_BGR2GRAY)
             x_t1 = np.reshape(x_t1, (80, 80, 1))
             s_t1 = np.append(x_t1, s_t[:,:,1:], axis = 2)
@@ -181,11 +183,13 @@ def trainNetwork(s, readout, h_fc1, sess):
             state = "explore"
         else:
             state = "train"
-        print "TIMESTEP", t, "/ STATE", state, "/ EPSILON", epsilon, "/ ACTION", action_index, "/ REWARD", r_t, "/ Q_MAX %e" % np.max(readout_t), "/ SCORE1", score1, "/ SCORE2", score2
+        print "TIMESTEP", t, "/ STATE", state, "/ EPSILON", epsilon, "/ ACTION", action_index, "/ REWARD", r_t, "/ Q_MAX %e" % np.max(readout_t), "/ SCORE1", score1, "/ SCORE2", score2 #sjw
 
+#sjw
         if terminal == 1:
             log = [t, score1, score2]
             l_file.write(",".join([str(x) for x in log]) + '\n')
+#sjw
         # write info to files
         # if t % 10000 <= 2000:
           # a_file.write(",".join([str(x) for x in readout_t]) + '\n')

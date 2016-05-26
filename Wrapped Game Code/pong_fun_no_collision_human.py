@@ -30,7 +30,7 @@ circle = circ_sur.convert()
 circle.set_colorkey((0,0,0))
 font = pygame.font.SysFont("calibri",40)
 
-#Creating 4 obstacle bars.
+#Creating 4 obstacle bars. #hma
 obs = pygame.Surface((60, 10))
 obs1 = obs.convert()
 obs1.fill((0,0,0))
@@ -91,7 +91,7 @@ class GameState:
         screen.blit(circle,(self.circle_x,self.circle_y))
         screen.blit(self.score1,(250.,210.))
         screen.blit(self.score2,(380.,210.))
-        #obstacle blit
+        #obstacle blit #hma
         screen.blit(obs1,(self.obs1_x, self.obs1_y))
         screen.blit(obs2,(self.obs2_x, self.obs2_y))
         screen.blit(obs3,(self.obs3_x, self.obs3_y))
@@ -109,7 +109,7 @@ class GameState:
 #            else:
 #                self.bar2_y == self.circle_y + 7.5
 
-        #Human Control.
+        #Human Control. #hma
         #done = False
         #while done==False:
         for event in pygame.event.get(): # User did something
