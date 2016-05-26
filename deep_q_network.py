@@ -12,8 +12,8 @@ import numpy as np
 GAME = 'pong' # the name of the game being played for log files
 GAMMA = 0.99 # decay rate of past observations
 ACTIONS = 3 # number of valid actions
-OBSERVE = 50000. # timesteps to observe before training
-EXPLORE = 500000. # frames over which to anneal epsilon
+OBSERVE = 500. # timesteps to observe before training
+EXPLORE = 5000. # frames over which to anneal epsilon
 FINAL_EPSILON = 0.1 # final value of epsilon
 INITIAL_EPSILON = 1.0 # starting value of epsilon
 REPLAY_MEMORY = 100000 # number of previous transitions to remember
@@ -124,8 +124,8 @@ def trainNetwork(s, readout, h_fc1, sess):
             a_t[action_index] = 1
 
         # scale down epsilon
-        if epsilon > FINAL_EPSILON and t > OBSERVE:
-            epsilon -= (INITIAL_EPSILON - FINAL_EPSILON) / EXPLORE
+#       if epsilon > FINAL_EPSILON and t > OBSERVE:
+#           epsilon -= (INITIAL_EPSILON - FINAL_EPSILON) / EXPLORE
 
         for i in range(0, K):
             # run the selected action and observe next state and reward
@@ -185,7 +185,7 @@ def trainNetwork(s, readout, h_fc1, sess):
 
         if terminal == 1:
             log = [t, score1, score2]
-            l_file.write(",".join([str(x) for x in log] + '\n')
+            l_file.write(",".join([str(x) for x in log]) + '\n')
         # write info to files
         # if t % 10000 <= 2000:
           # a_file.write(",".join([str(x) for x in readout_t]) + '\n')
