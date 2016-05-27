@@ -146,20 +146,20 @@ class GameState:
                 self.speed_x = -self.speed_x
 
         #colisions on obstacles
-        if self.circle_x >= self.obs1_x and self.circle_x <= self.obs1_x + 30.:
-            if self.circle_y <= self.obs1_y - 10.:
+        if self.circle_x >= self.obs1_x and self.circle_x <= self.obs1_x + 180.:
+            if self.circle_y <= self.obs1_y:
                 self.speed_y = +self.speed_y
             elif self.circle_y >= self.obs1_y + 10.:
                 self.speed_y = -self.speed_y
-            elif self.circle_y <= self.obs2_y - 10.:
+            elif self.circle_y <= self.obs2_y:
                 self.speed_y = +self.speed_y
             elif self.circle_y >= self.obs2_y + 10.:
                 self.speed_y = -self.speed_y
-            elif self.circle_y <= self.obs3_y - 10.:
+            elif self.circle_y <= self.obs3_y:
                 self.speed_y = +self.speed_y
             elif self.circle_y >= self.obs3_y + 10.:
                 self.speed_y = -self.speed_y
-            elif self.circle_y <= self.obs4_y - 10.:
+            elif self.circle_y <= self.obs4_y:
                 self.speed_y = +self.speed_y
             elif self.circle_y >= self.obs4_y + 10.:
                 self.speed_y = -self.speed_y
